@@ -10,6 +10,8 @@
 
 		<title>IP Tv</title>
 		<link rel="shortcut icon" href="logo.png" />
+		
+		<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 		<script>
 			var view = false;
 			var count = 0;
@@ -50,6 +52,21 @@
 					}
 				}, 1000);
 			}
+			
+			function playM3u8(url){
+			  if(Hls.isSupported()) {
+				  var video = document.getElementById('video');
+				  video.volume = 1.0;
+				  var hls = new Hls();
+				  var m3u8Url = decodeURIComponent(url)
+				  hls.loadSource(m3u8Url);
+				  hls.attachMedia(video);
+				  hls.on(Hls.Events.MANIFEST_PARSED,function() {
+					video.play();
+				  });
+				  document.title = url
+				}
+			}
 		</script>
 		<style>
 			.navbar {
@@ -88,7 +105,7 @@
 						Canais
 					  </a>
 					  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<li><a class="dropdown-item" href="#">Canal 1</a></li>
+						<li><a class="dropdown-item" href="#" onclick="playM3u8('https://streaming.cnnbrasil.com.br/cnndigital_main.m3u8');">CNN Brasil</a></li>
 						<li><a class="dropdown-item" href="#">Canal 2</a></li>
 						<li><a class="dropdown-item" href="#">Canal 3</a></li>
 					  </ul>
@@ -98,8 +115,8 @@
 		  </div>
 		</nav>
 		
-		<video class="video-full" src="http://midia.faap.br:80/faaplatamlive-live/stream_720/livestream.m3u8" controls="" autoplay="">
-        </video>
+		<video id="video" class="video-full" controls="" autoplay="" preload="auto">
+		</video>
 		
 		<!-- Optional JavaScript; choose one of the two! -->
 
