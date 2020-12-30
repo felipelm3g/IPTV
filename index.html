@@ -11,16 +11,44 @@
 		<title>IP Tv</title>
 		<link rel="shortcut icon" href="logo.png" />
 		<script>
+			var view = false;
+			var count = 0;
+			
 			function Ajustmenu(){
 				setTimeout(function(){
 					document.getElementById('menu').style.opacity = 0;
+					view = false;
 					document.getElementById('menu').onmouseover = function(){
 						document.getElementById('menu').style.opacity = 1;
+						view = true;
+						count = 0;
 					}
 					document.getElementById('menu').onmouseout = function(){
 						document.getElementById('menu').style.opacity = 0;
+						view = false;
 					}
 				}, 2000);
+				
+				setInterval(function(){
+					if(view){
+						if(count >= 5){
+							count = 0;
+							document.getElementById('menu').style.opacity = 0;
+							view = false;
+							document.getElementById('menu').onmouseover = function(){
+								document.getElementById('menu').style.opacity = 1;
+								view = true;
+								count = 0;
+							}
+							document.getElementById('menu').onmouseout = function(){
+								document.getElementById('menu').style.opacity = 0;
+								view = false;
+							}
+						} else {
+							count = 1 + count;
+						}
+					}
+				}, 1000);
 			}
 		</script>
 		<style>
